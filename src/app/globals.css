@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/*
+  Design system: Rams Industrial, "Spec Sheet" (see design/Reacher Rams Variations.html)
+  Type:    Hanken Grotesk (UI) + JetBrains Mono (micro-labels, numbers) · 12 / 13.5 / 14 / 16 / 20
+  Color:   warm-white #F6F5F1 body, white panels, 1px #DEDCD5 hairlines, ink #1C1B19.
+           One accent, signal orange #E8641B, only for the logo, "sent" state and focus.
+  Shape:   3-4px radii, no shadows, 4px spacing grid.
+  The stone palette is remapped to these warm greys so any stone-* utility stays on-system.
+*/
+@theme inline {
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-stone-50: #f6f5f1;
+  --color-stone-100: #f0eee8;
+  --color-stone-200: #dedcd5;
+  --color-stone-300: #cfccc3;
+  --color-stone-400: #7c796f;
+  --color-stone-500: #45423c;
+  --color-stone-600: #383631;
+  --color-stone-700: #2a2925;
+  --color-stone-800: #33322e;
+  --color-stone-900: #1c1b19;
+
+  --color-signal: #e8641b;
+  --color-ok: #3e8e5b;
+
+  --radius-md: 3px;
+  --radius-lg: 4px;
+}
+
+:root {
+  --background: #f6f5f1;
+  --foreground: #1c1b19;
+  color-scheme: light;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.01em; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; }
+
+@layer components {
+  .lbl {
+    @apply font-mono text-xs uppercase tracking-[0.05em] text-stone-600;
+  }
+  .input {
+    @apply w-full rounded-md border border-stone-200 bg-white px-3.5 py-2.5 text-[15px] outline-none placeholder:text-stone-500 focus:border-stone-900;
+  }
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-1 rounded-md bg-stone-900 px-5 py-2.5 text-sm font-semibold text-stone-50 hover:bg-stone-700 disabled:cursor-not-allowed disabled:bg-stone-300 disabled:text-stone-700;
+  }
+  .btn-secondary {
+    @apply inline-flex min-h-10 items-center justify-center gap-1 rounded-md border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-900 hover:bg-stone-100 disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-600;
+  }
+  .card {
+    @apply rounded-lg border border-stone-200 bg-white p-6;
+  }
+  .panel {
+    @apply rounded-lg border border-stone-200 bg-white;
+  }
+}

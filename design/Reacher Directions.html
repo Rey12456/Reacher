@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reacher — three directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  Design canvas: the same screen (a finished search + one contact card) in three directions.
+  Sample people are fictional. Everything shown maps to a real element of the app — no added sections.
+
+  A · Swiss Editorial   — Schibsted Grotesk only · ink #16140F on paper #F4F1EA · one accent vermilion #D9432B
+                          hairline rules, oversized rank folios, left-flush headings, numbered list rhythm
+  B · Rams Industrial   — IBM Plex Sans + Plex Mono labels · greys #ECEBE7 / #FFFFFF · functional accent #E8641B (status only)
+                          instrument-panel modules, spec-table "why", mono micro-labels, everything aligned to a 4px grid
+  C · Riso Field Notes  — Bricolage Grotesque display + DM Mono captions · paper #F3EDE1 · navy ink #1F2B5B · flo-pink #F2547D · teal #0E9A8E
+                          two-spot-color print feel, stamped labels, slight rotation, ticket-stub card
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #2a2926; color: #eee; font-family: "IBM Plex Sans", sans-serif; }
+  .intro { padding: 40px 48px 8px; max-width: 1100px; }
+  .intro h1 { font: 600 22px/1.3 "IBM Plex Sans", sans-serif; margin: 0 0 6px; }
+  .intro p { margin: 0; color: #bbb; font-size: 15px; text-wrap: pretty; }
+  .canvas { display: grid; grid-template-columns: repeat(3, minmax(380px, 1fr)); gap: 32px; padding: 32px 48px 64px; align-items: start; }
+  @media (max-width: 1300px) { .canvas { grid-template-columns: 1fr; max-width: 640px; } }
+  .cell-label { padding: 0 2px 12px; }
+  .cell-label h2 { margin: 0; font: 500 12px/1 "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: #ddd; }
+  .cell-label p { margin: 6px 0 0; font-size: 13.5px; color: #aaa; text-wrap: pretty; }
+  .frame { border-radius: 6px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+
+  /* ───────── A · Swiss Editorial ───────── */
+  .a { --ink:#16140F; --paper:#F4F1EA; --rule:#16140F; --muted:#6B675E; --accent:#D9432B;
+       background: var(--paper); color: var(--ink); font-family: "Schibsted Grotesk", sans-serif; }
+  .a nav { display:flex; gap:20px; align-items:baseline; padding:16px 24px; border-bottom:1px solid var(--rule); font-size:13px; }
+  .a nav b { font-weight:800; letter-spacing:-.01em; font-size:15px; margin-right:auto; }
+  .a nav span { color:var(--muted); }
+  .a .page { padding: 28px 24px 32px; }
+  .a .kicker { font-size:12px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .a h1 { font-weight:800; font-size:40px; line-height:1; letter-spacing:-.035em; margin:8px 0 6px; text-wrap:balance; }
+  .a h1 em { font-style:normal; color:var(--accent); }
+  .a .meta { font-size:13px; color:var(--muted); padding-bottom:20px; border-bottom:1px solid var(--rule); }
+  .a .row { display:grid; grid-template-columns: 64px 1fr; gap:0 16px; padding:20px 0; border-bottom:1px solid var(--rule); }
+  .a .folio { font-weight:800; font-size:56px; line-height:.85; letter-spacing:-.05em; }
+  .a .name { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .a .name a { font-weight:700; font-size:20px; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--ink); }
+  .a .tag { font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
+  .a .sub { font-size:13.5px; color:var(--muted); margin-top:2px; }
+  .a .why { margin:14px 0 0; font-size:14px; line-height:1.45; }
+  .a .why b { color:var(--accent); font-weight:700; }
+  .a .confirm { margin-top:10px; font-size:13px; color:var(--muted); }
+  .a .confirm button { font:inherit; font-weight:500; color:var(--ink); background:none; border:1px solid var(--ink); padding:4px 10px; margin-left:6px; cursor:pointer; }
+  .a .draft { grid-column: 2; margin-top:16px; }
+  .a .draft-h { display:flex; justify-content:space-between; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-top:1px solid var(--rule); padding-top:8px; }
+  .a .draft p { margin:8px 0 0; font-size:15px; line-height:1.5; }
+  .a .actions { grid-column:2; display:flex; gap:8px; margin-top:14px; align-items:center; }
+  .a .btn { font:inherit; font-size:13px; font-weight:700; background:var(--ink); color:var(--paper); border:0; padding:8px 14px; }
+  .a .btn2 { font:inherit; font-size:13px; font-weight:500; background:none; border:1px solid var(--ink); padding:7px 12px; }
+  .a select { margin-left:auto; font:inherit; font-size:13px; padding:6px 8px; border:1px solid var(--ink); background:var(--paper); }
+  .a .next { padding-top:16px; display:grid; grid-template-columns:64px 1fr; gap:16px; opacity:.35; }
+
+  /* ───────── B · Rams Industrial ───────── */
+  .b { --bg:#ECEBE7; --panel:#FFFFFF; --line:#D6D4CE; --ink:#1F1F1D; --muted:#77756F; --signal:#E8641B;
+       background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans", sans-serif; }
+  .b .mono { font-family:"IBM Plex Mono", monospace; }
+  .b nav { display:flex; align-items:center; gap:16px; padding:12px 20px; background:var(--panel); border-bottom:1px solid var(--line); font-size:13px; }
+  .b nav b { font-weight:600; margin-right:auto; display:flex; align-items:center; gap:8px; }
+  .b nav b i { width:10px; height:10px; border-radius:50%; background:var(--signal); display:inline-block; }
+  .b nav span { color:var(--muted); }
+  .b .page { padding:20px; display:grid; gap:12px; }
+  .b .query { background:var(--panel); border:1px solid var(--line); border-radius:4px; display:grid; grid-template-columns:1fr 1fr auto; }
+  .b .query > div { padding:10px 14px; border-right:1px solid var(--line); }
+  .b .lbl { font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .b .val { font-size:15px; font-weight:500; margin-top:2px; }
+  .b .query .stat { border-right:0; text-align:right; }
+  .b .card { background:var(--panel); border:1px solid var(--line); border-radius:4px; }
+  .b .head { display:grid; grid-template-columns:36px 1fr auto; gap:12px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--line); }
+  .b .rank { width:36px; height:36px; border-radius:50%; border:1px solid var(--line); display:grid; place-items:center; font-family:"IBM Plex Mono", monospace; font-size:14px; }
+  .b .name a { font-weight:600; font-size:16px; color:var(--ink); text-decoration:none; }
+  .b .name small { display:block; font-size:13px; color:var(--muted); margin-top:1px; }
+  .b .status { display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:4px; padding:6px 10px; font-size:13px; }
+  .b .status i { width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .b table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  .b td { padding:8px 16px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .b td:first-child { width:120px; }
+  .b .ok { color:var(--ink); font-weight:500; }
+  .b .warn { color:var(--muted); }
+  .b .warn button { font:inherit; font-size:12px; background:none; border:1px solid var(--line); border-radius:3px; padding:2px 8px; margin-left:6px; color:var(--ink); }
+  .b .drafts { display:grid; grid-template-columns:1fr; }
+  .b .draft { padding:12px 16px; }
+  .b .draft + .draft { border-top:1px solid var(--line); }
+  .b .draft-h { display:flex; justify-content:space-between; align-items:center; }
+  .b .meter { display:flex; align-items:center; gap:8px; }
+  .b .meter span { display:block; width:80px; height:4px; background:var(--bg); border-radius:2px; overflow:hidden; }
+  .b .meter span i { display:block; height:100%; width:54%; background:var(--ink); }
+  .b .draft p { margin:8px 0 10px; font-size:14px; line-height:1.5; }
+  .b .key { font:500 12px/1 "IBM Plex Sans", sans-serif; background:var(--bg); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:7px 10px; }
+
+  /* ───────── C · Riso Field Notes ───────── */
+  .c { --paper:#F3EDE1; --ink:#1F2B5B; --pink:#F2547D; --teal:#0E9A8E; --muted:#5E6584;
+       background:var(--paper); color:var(--ink); font-family:"Bricolage Grotesque", sans-serif;
+       background-image: radial-gradient(rgba(31,43,91,.07) 1px, transparent 1px); background-size: 6px 6px; }
+  .c .mono { font-family:"DM Mono", monospace; }
+  .c nav { display:flex; align-items:baseline; gap:16px; padding:16px 22px; font-size:14px; }
+  .c nav b { font-weight:800; font-size:22px; letter-spacing:-.02em; margin-right:auto; }
+  .c nav b span { color:var(--pink); }
+  .c nav a { color:var(--ink); text-decoration:none; font-family:"DM Mono", monospace; font-size:12.5px; }
+  .c .page { padding:8px 22px 28px; }
+  .c h1 { font-weight:800; font-size:38px; line-height:.95; letter-spacing:-.03em; margin:6px 0 4px; }
+  .c h1 .hl { background:linear-gradient(transparent 55%, rgba(242,84,125,.45) 55%); }
+  .c .meta { font-family:"DM Mono", monospace; font-size:12px; color:var(--muted); margin-bottom:18px; }
+  .c .ticket { position:relative; background:#FFFDF8; border:1.5px solid var(--ink); border-radius:10px; padding:16px 18px 14px 18px; box-shadow: 4px 4px 0 var(--ink); }
+  .c .stamp { position:absolute; top:-12px; right:16px; transform:rotate(3deg); background:var(--teal); color:#fff; font-family:"DM Mono", monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:4px 8px; border-radius:3px; }
+  .c .who { display:flex; gap:12px; align-items:flex-start; }
+  .c .num { font-weight:800; font-size:30px; line-height:1; color:var(--pink); min-width:34px; }
+  .c .who a { font-weight:800; font-size:21px; color:var(--ink); text-decoration:none; letter-spacing:-.01em; }
+  .c .who small { display:block; font-family:"DM Mono", monospace; font-size:12px; color:var(--muted); margin-top:3px; }
+  .c .why { margin:12px 0 0; font-size:15px; line-height:1.4; }
+  .c .why u { text-decoration:none; background:rgba(14,154,142,.18); padding:0 3px; border-radius:2px; }
+  .c .maybe { margin-top:10px; font-size:13.5px; border:1.5px dashed var(--pink); border-radius:8px; padding:8px 10px; }
+  .c .maybe button { font:inherit; font-weight:600; font-size:13px; background:var(--pink); color:#fff; border:0; border-radius:20px; padding:4px 12px; margin-left:4px; }
+  .c .perf { border-top:1.5px dashed var(--ink); margin:14px -18px 0; }
+  .c .draft { margin-top:12px; }
+  .c .draft-h { display:flex; justify-content:space-between; font-family:"DM Mono", monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .c .draft p { margin:6px 0 0; font-size:15.5px; line-height:1.45; }
+  .c .row { display:flex; gap:8px; align-items:center; margin-top:14px; flex-wrap:wrap; }
+  .c .btn { font:inherit; font-weight:600; font-size:14px; background:var(--ink); color:var(--paper); border:0; border-radius:20px; padding:8px 16px; }
+  .c .btn2 { font:inherit; font-weight:600; font-size:14px; background:none; color:var(--ink); border:1.5px solid var(--ink); border-radius:20px; padding:7px 14px; }
+  .c .pill { margin-left:auto; display:flex; gap:4px; font-family:"DM Mono", monospace; font-size:11.5px; }
+  .c .pill span { border:1.5px solid var(--ink); border-radius:20px; padding:4px 8px; opacity:.45; }
+  .c .pill span.on { opacity:1; background:var(--teal); color:#fff; border-color:var(--teal); }
+</style>
+</head>
+<body>
+  <header class="intro">
+    <h1>Reacher: three directions</h1>
+    <p>Each one shows the same screen: a finished search with the top contact. Pick one, or name a blend (e.g. "A's type with C's warmth"). I'll then apply it to every screen in the real app.</p>
+  </header>
+
+  <main class="canvas">
+    <!-- A -->
+    <section>
+      <header class="cell-label">
+        <h2>A · Swiss Editorial</h2>
+        <p>Pentagram lineage. Strict and quiet, with hairline rules, oversized rank numbers and one vermilion accent kept for the shared connection. Calm authority, like a well-set ledger.</p>
+      </header>
+      <div class="frame a">
+        <nav><b>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="page">
+          <div class="kicker">10 people · ranked by shared connection</div>
+          <h1>Software Engineer at <em>Stripe</em></h1>
+          <div class="meta">Asked for a 30-minute chat · searched today</div>
+          <div class="row">
+            <div class="folio">01</div>
+            <div>
+              <div class="name"><a href="#">Priya Raman</a><span class="tag">Peer</span></div>
+              <div class="sub">Software Engineer · New York</div>
+              <p class="why">Shared school, <b>Carnegie Mellon University</b>. Works in the role you&rsquo;re targeting.</p>
+              <div class="confirm">Possibly also <b>Squarespace</b>, so check their profile <button>Confirm</button></div>
+            </div>
+            <div class="draft">
+              <div class="draft-h"><span>Connection note</span><span>86 / 200</span></div>
+              <p>Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</p>
+            </div>
+            <div class="actions"><button class="btn">Copy note</button><button class="btn2">Follow-up message</button><select><option>Not sent</option></select></div>
+          </div>
+          <div class="next"><div class="folio">02</div><div style="font-weight:700;font-size:20px">Daniel Okafor</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B -->
+    <section>
+      <header class="cell-label">
+        <h2>B · Rams Industrial</h2>
+        <p>Braun lineage. An instrument panel with modular cells, mono labels, a spec-table "why" and a meter for the 200-character limit. Orange appears only as the logo dot and live status.</p>
+      </header>
+      <div class="frame b">
+        <nav><b><i></i>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="page">
+          <div class="query">
+            <div><div class="lbl">Company</div><div class="val">Stripe</div></div>
+            <div><div class="lbl">Role</div><div class="val">Software Engineer</div></div>
+            <div class="stat"><div class="lbl">Results</div><div class="val mono">10</div></div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div class="rank">01</div>
+              <div class="name"><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · Peer</small></div>
+              <div class="status"><i></i>Not sent ▾</div>
+            </div>
+            <table>
+              <tr><td class="lbl">Shared</td><td class="ok">School · Carnegie Mellon University</td></tr>
+              <tr><td class="lbl">Unconfirmed</td><td class="warn">Past employer · Squarespace <button>Confirm</button></td></tr>
+            </table>
+            <div class="drafts">
+              <div class="draft">
+                <div class="draft-h"><span class="lbl">Connection note</span><span class="meter"><span><i></i></span><small class="mono" style="font-size:11px;color:#77756F">86/200</small></span></div>
+                <p>Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</p>
+                <button class="key">Copy note</button>
+              </div>
+              <div class="draft">
+                <div class="draft-h"><span class="lbl">After they accept</span></div>
+                <p style="color:#77756F">Hi Priya, thanks for connecting. I&rsquo;m a backend engineer in New York…</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- C -->
+    <section>
+      <header class="cell-label">
+        <h2>C · Riso Field Notes</h2>
+        <p>Independent-print lineage. Warm and clearly made by people: navy ink on paper, a pink highlighter, a teal stamp, and ticket-stub cards. Friendly for a friends pilot, at some cost to "serious tool".</p>
+      </header>
+      <div class="frame c">
+        <nav><b>reacher<span>.</span></b><a href="#">search</a><a href="#">outreach</a><a href="#">profile</a></nav>
+        <div class="page">
+          <h1>Software Engineer at <span class="hl">Stripe</span></h1>
+          <div class="meta">10 people · asking for a 30-min chat</div>
+          <div class="ticket">
+            <div class="stamp">Shared school</div>
+            <div class="who">
+              <div class="num">1</div>
+              <div><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · peer</small></div>
+            </div>
+            <p class="why">You both went to <u>Carnegie Mellon University</u>, and they&rsquo;re in the role you want.</p>
+            <div class="maybe">Maybe also <b>Squarespace</b>? Check their profile <button>Yes, add it</button></div>
+            <div class="perf"></div>
+            <div class="draft">
+              <div class="draft-h"><span>Connection note</span><span>86/200</span></div>
+              <p>Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</p>
+            </div>
+            <div class="row"><button class="btn">Copy note</button><button class="btn2">Follow-up</button>
+              <div class="pill"><span class="on">not sent</span><span>sent</span><span>replied</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

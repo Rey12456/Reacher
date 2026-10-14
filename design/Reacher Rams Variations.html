@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reacher — Rams Industrial variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  Rams Industrial, four variations. Same content in each: a finished search and the top contact.
+  Sample people are fictional. Shared rules across all four: one functional accent, mono micro-labels,
+  4px spacing grid, hairline 1px lines, no shadows except physical key travel.
+
+  V1 · Panel        light grey #ECEBE7 + white modules · Plex Sans/Mono · orange #E8641B for live status only (the one you saw)
+  V2 · ET66 Dark    charcoal #1E1D1B body, cream keys #E9E4D8 · Plex · orange signal + LED status lights
+  V3 · Spec Sheet   warm white #F6F5F1 · Hanken Grotesk + JetBrains Mono · list-and-detail split, all 10 people visible at once
+  V4 · SK4 Warm     cream #E9E4D8 + #F7F4EC panels · Instrument Sans + DM Mono · olive #5B7A35 signal · status as push-keys, note length as a tuning scale
+-->
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #2a2926; color: #eee; font-family: "IBM Plex Sans", sans-serif; }
+  .intro { padding: 40px 48px 8px; max-width: 1100px; }
+  .intro h1 { font: 600 22px/1.3 "IBM Plex Sans", sans-serif; margin: 0 0 6px; }
+  .intro p { margin: 0; color: #bbb; font-size: 15px; text-wrap: pretty; }
+  .canvas { display: grid; grid-template-columns: repeat(2, minmax(420px, 1fr)); gap: 40px 32px; padding: 32px 48px 64px; align-items: start; max-width: 1400px; }
+  .wide { grid-column: 1 / -1; }
+  @media (max-width: 1000px) { .canvas { grid-template-columns: 1fr; padding: 24px 16px 48px; } .intro { padding: 32px 16px 0; } }
+  .cell-label { padding: 0 2px 12px; }
+  .cell-label h2 { margin: 0; font: 500 12px/1 "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: #ddd; }
+  .cell-label p { margin: 6px 0 0; font-size: 13.5px; color: #aaa; text-wrap: pretty; max-width: 70ch; }
+  .frame { border-radius: 6px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+
+  /* ───────── V1 · Panel ───────── */
+  .v1 { --bg:#ECEBE7; --panel:#FFFFFF; --line:#D6D4CE; --ink:#1F1F1D; --muted:#77756F; --signal:#E8641B;
+        background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans", sans-serif; }
+  .v1 .lbl { font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .v1 nav { display:flex; align-items:center; gap:16px; padding:12px 20px; background:var(--panel); border-bottom:1px solid var(--line); font-size:13px; }
+  .v1 nav b { font-weight:600; margin-right:auto; display:flex; align-items:center; gap:8px; }
+  .v1 nav b i { width:10px; height:10px; border-radius:50%; background:var(--signal); }
+  .v1 nav span { color:var(--muted); }
+  .v1 .page { padding:20px; display:grid; gap:12px; }
+  .v1 .query { background:var(--panel); border:1px solid var(--line); border-radius:4px; display:grid; grid-template-columns:1fr 1fr auto; }
+  .v1 .query > div { padding:10px 14px; border-right:1px solid var(--line); }
+  .v1 .query > div:last-child { border-right:0; text-align:right; }
+  .v1 .val { font-size:15px; font-weight:500; margin-top:2px; }
+  .v1 .card { background:var(--panel); border:1px solid var(--line); border-radius:4px; }
+  .v1 .head { display:grid; grid-template-columns:36px 1fr auto; gap:12px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--line); }
+  .v1 .rank { width:36px; height:36px; border-radius:50%; border:1px solid var(--line); display:grid; place-items:center; font-family:"IBM Plex Mono", monospace; font-size:14px; }
+  .v1 .name a { font-weight:600; font-size:16px; color:var(--ink); text-decoration:none; }
+  .v1 .name small { display:block; font-size:13px; color:var(--muted); margin-top:1px; }
+  .v1 .status { display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:4px; padding:6px 10px; font-size:13px; }
+  .v1 .status i { width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .v1 table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  .v1 td { padding:8px 16px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  .v1 td:first-child { width:120px; }
+  .v1 .warn { color:var(--muted); }
+  .v1 .warn button { font:inherit; font-size:12px; background:none; border:1px solid var(--line); border-radius:3px; padding:2px 8px; margin-left:6px; color:var(--ink); }
+  .v1 .draft { padding:12px 16px; }
+  .v1 .draft + .draft { border-top:1px solid var(--line); }
+  .v1 .dh { display:flex; justify-content:space-between; align-items:center; }
+  .v1 .meter { display:flex; align-items:center; gap:8px; font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--muted); }
+  .v1 .meter span { display:block; width:80px; height:4px; background:var(--bg); border-radius:2px; overflow:hidden; }
+  .v1 .meter span i { display:block; height:100%; width:43%; background:var(--ink); }
+  .v1 .field { margin:8px 0 10px; font-size:14px; line-height:1.5; border:1px solid var(--line); border-radius:3px; padding:8px 10px; }
+  .v1 .key { font:500 12px/1 "IBM Plex Sans", sans-serif; background:var(--bg); border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:7px 10px; color:var(--ink); }
+
+  /* ───────── V2 · ET66 Dark ───────── */
+  .v2 { --body:#1E1D1B; --panel:#2A2926; --line:#3A3935; --ink:#ECE8DF; --muted:#9A968C; --signal:#F08A24; --keycream:#E9E4D8; --led-green:#7BC67E;
+        background:var(--body); color:var(--ink); font-family:"IBM Plex Sans", sans-serif; }
+  .v2 .lbl { font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .v2 nav { display:flex; align-items:center; gap:16px; padding:14px 20px; border-bottom:1px solid var(--line); font-size:13px; }
+  .v2 nav b { font-weight:600; margin-right:auto; display:flex; align-items:center; gap:8px; }
+  .v2 nav b i { width:10px; height:10px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px rgba(240,138,36,.6); }
+  .v2 nav span { color:var(--muted); }
+  .v2 .page { padding:20px; display:grid; gap:12px; }
+  .v2 .query { display:grid; grid-template-columns:1fr 1fr auto; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .v2 .query > div { background:var(--panel); padding:10px 14px; }
+  .v2 .query > div:last-child { text-align:right; }
+  .v2 .val { font-size:15px; font-weight:500; margin-top:2px; }
+  .v2 .card { background:var(--panel); border:1px solid var(--line); border-radius:6px; }
+  .v2 .head { display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--line); }
+  .v2 .rank { font-family:"IBM Plex Mono", monospace; font-size:24px; color:var(--signal); min-width:36px; }
+  .v2 .name a { font-weight:600; font-size:16px; color:var(--ink); text-decoration:none; }
+  .v2 .name small { display:block; font-size:13px; color:var(--muted); margin-top:1px; }
+  .v2 .leds { display:flex; flex-wrap:wrap; gap:6px 12px; font-family:"IBM Plex Mono", monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  .v2 .leds span { display:flex; align-items:center; gap:5px; white-space:nowrap; }
+  .v2 .leds i { width:7px; height:7px; border-radius:50%; background:#4a4843; }
+  .v2 .leds .on { color:var(--ink); }
+  .v2 .leds .on i { background:var(--signal); box-shadow:0 0 6px rgba(240,138,36,.7); }
+  .v2 .spec { display:grid; grid-template-columns:120px 1fr; font-size:13.5px; }
+  .v2 .spec > div { padding:9px 16px; border-bottom:1px solid var(--line); }
+  .v2 .spec .dim { color:var(--muted); }
+  .v2 .spec button { font:inherit; font-size:12px; background:none; color:var(--ink); border:1px solid var(--line); border-radius:3px; padding:2px 8px; margin-left:6px; }
+  .v2 .draft { padding:12px 16px; }
+  .v2 .draft + .draft { border-top:1px solid var(--line); }
+  .v2 .dh { display:flex; justify-content:space-between; align-items:center; }
+  .v2 .count { font-family:"IBM Plex Mono", monospace; font-size:11px; color:var(--muted); }
+  .v2 .field { margin:8px 0 10px; font-size:14px; line-height:1.5; background:var(--body); border:1px solid var(--line); border-radius:4px; padding:9px 11px; }
+  .v2 .keys { display:flex; gap:8px; }
+  .v2 .key { font:500 12.5px/1 "IBM Plex Sans", sans-serif; background:var(--keycream); color:#1E1D1B; border:0; border-radius:5px; padding:9px 14px; box-shadow:0 2px 0 #9C978A; }
+  .v2 .key.alt { background:#3A3935; color:var(--ink); box-shadow:0 2px 0 #121110; }
+  .v2 .key.go { background:var(--signal); color:#1E1D1B; box-shadow:0 2px 0 #A85A12; }
+
+  /* ───────── V3 · Spec Sheet (split) ───────── */
+  .v3 { --bg:#F6F5F1; --panel:#FFFFFF; --line:#DEDCD5; --ink:#1C1B19; --muted:#7A776F; --signal:#E8641B; --sel:#F0EEE8;
+        background:var(--bg); color:var(--ink); font-family:"Hanken Grotesk", sans-serif; }
+  .v3 .lbl { font-family:"JetBrains Mono", monospace; font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  .v3 nav { display:flex; align-items:center; gap:18px; padding:12px 20px; border-bottom:1px solid var(--line); font-size:13.5px; background:var(--panel); }
+  .v3 nav b { font-weight:700; margin-right:auto; display:flex; align-items:center; gap:8px; }
+  .v3 nav b i { width:10px; height:10px; background:var(--signal); }
+  .v3 nav span { color:var(--muted); }
+  .v3 .bar { display:flex; gap:24px; align-items:baseline; padding:14px 20px; border-bottom:1px solid var(--line); }
+  .v3 .bar h1 { font-size:20px; font-weight:700; margin:0; letter-spacing:-.01em; }
+  .v3 .bar .lbl { margin-left:auto; }
+  .v3 .split { display:grid; grid-template-columns: minmax(300px, 0.9fr) 1.1fr; min-height:520px; }
+  @media (max-width: 1000px) { .v3 .split { grid-template-columns:1fr; } .v3 .list { border-right:0; border-bottom:1px solid var(--line); } }
+  .v3 .list { border-right:1px solid var(--line); }
+  .v3 .lh, .v3 .li { display:grid; grid-template-columns:28px 1fr 110px 14px; gap:10px; align-items:center; padding:9px 20px; }
+  .v3 .lh { border-bottom:1px solid var(--line); }
+  .v3 .li { border-bottom:1px solid var(--line); font-size:13.5px; }
+  .v3 .li.sel { background:var(--sel); }
+  .v3 .li .n { font-family:"JetBrains Mono", monospace; color:var(--muted); font-size:12px; }
+  .v3 .li b { font-weight:600; display:block; }
+  .v3 .li small { color:var(--muted); font-size:12px; }
+  .v3 .li .sh { font-size:12px; }
+  .v3 .li .sh.none { color:var(--muted); }
+  .v3 .dot { width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .v3 .dot.sent { background:var(--signal); }
+  .v3 .dot.rep { background:#3E8E5B; }
+  .v3 .detail { padding:20px; display:grid; gap:14px; align-content:start; }
+  .v3 .dhead { display:flex; align-items:flex-start; gap:12px; }
+  .v3 .dhead a { font-size:20px; font-weight:700; color:var(--ink); text-decoration:none; letter-spacing:-.01em; }
+  .v3 .dhead small { display:block; color:var(--muted); font-size:13.5px; margin-top:2px; }
+  .v3 .dhead select { margin-left:auto; font:inherit; font-size:13px; border:1px solid var(--line); border-radius:3px; padding:6px 8px; background:var(--panel); }
+  .v3 dl { display:grid; grid-template-columns:110px 1fr; margin:0; font-size:13.5px; border-top:1px solid var(--line); }
+  .v3 dt, .v3 dd { margin:0; padding:8px 0; border-bottom:1px solid var(--line); }
+  .v3 dd button { font:inherit; font-size:12px; background:none; border:1px solid var(--line); border-radius:3px; padding:2px 8px; margin-left:6px; }
+  .v3 .dh { display:flex; justify-content:space-between; }
+  .v3 .field { margin-top:6px; font-size:14px; line-height:1.5; background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:9px 11px; }
+  .v3 .keys { display:flex; gap:8px; margin-top:8px; }
+  .v3 .key { font:600 12.5px/1 "Hanken Grotesk", sans-serif; background:var(--ink); color:var(--bg); border:0; border-radius:3px; padding:8px 12px; }
+  .v3 .key.alt { background:var(--panel); color:var(--ink); border:1px solid var(--line); }
+
+  /* ───────── V4 · SK4 Warm ───────── */
+  .v4 { --bg:#E9E4D8; --panel:#F7F4EC; --line:#D3CCBC; --ink:#2B2924; --muted:#7D7668; --signal:#5B7A35;
+        background:var(--bg); color:var(--ink); font-family:"Instrument Sans", sans-serif; }
+  .v4 .lbl { font-family:"DM Mono", monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .v4 nav { display:flex; align-items:center; gap:16px; padding:14px 20px; font-size:13.5px; }
+  .v4 nav b { font-weight:600; margin-right:auto; letter-spacing:.01em; }
+  .v4 nav span { color:var(--muted); }
+  .v4 .page { padding:4px 20px 20px; display:grid; gap:12px; }
+  .v4 .query { background:var(--panel); border-radius:10px; padding:12px 16px; display:flex; gap:28px; align-items:end; }
+  .v4 .val { font-size:16px; font-weight:500; margin-top:3px; }
+  .v4 .query .done { margin-left:auto; display:flex; align-items:center; gap:6px; font-family:"DM Mono", monospace; font-size:11.5px; color:var(--signal); }
+  .v4 .query .done i { width:8px; height:8px; border-radius:50%; background:var(--signal); }
+  .v4 .card { background:var(--panel); border-radius:10px; padding:16px; display:grid; gap:14px; }
+  .v4 .head { display:grid; grid-template-columns:44px 1fr; gap:14px; align-items:center; }
+  .v4 .knob { width:44px; height:44px; border-radius:50%; background:var(--bg); display:grid; place-items:center; font-family:"DM Mono", monospace; font-size:15px; position:relative; }
+  .v4 .knob::after { content:""; position:absolute; top:4px; left:50%; width:2px; height:7px; margin-left:-1px; background:var(--ink); border-radius:1px; }
+  .v4 .head a { font-weight:600; font-size:17px; color:var(--ink); text-decoration:none; }
+  .v4 .head small { display:block; font-size:13px; color:var(--muted); margin-top:1px; }
+  .v4 .facts { display:grid; gap:6px; font-size:13.5px; }
+  .v4 .fact { display:flex; gap:10px; align-items:center; }
+  .v4 .fact .lbl { width:96px; }
+  .v4 .fact.maybe { color:var(--muted); }
+  .v4 .fact button { font:inherit; font-size:12px; background:var(--bg); border:0; border-radius:12px; padding:3px 10px; color:var(--ink); }
+  .v4 .dh { display:flex; justify-content:space-between; align-items:end; }
+  .v4 .scale { width:150px; }
+  .v4 .ticks { position:relative; height:12px; background: repeating-linear-gradient(90deg, var(--muted) 0 1px, transparent 1px 15px); opacity:.7; }
+  .v4 .ticks::after { content:""; position:absolute; left:43%; top:-3px; width:2px; height:16px; background:var(--signal); }
+  .v4 .scale .nums { display:flex; justify-content:space-between; font-family:"DM Mono", monospace; font-size:9.5px; color:var(--muted); margin-top:2px; }
+  .v4 .field { margin-top:6px; font-size:14.5px; line-height:1.5; background:#FFFDF7; border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .v4 .copy { font:500 12.5px/1 "Instrument Sans", sans-serif; background:var(--ink); color:var(--panel); border:0; border-radius:16px; padding:8px 14px; margin-top:8px; }
+  .v4 .pushkeys { display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; }
+  .v4 .pushkeys span { text-align:center; font-family:"DM Mono", monospace; font-size:11px; background:var(--bg); border-radius:6px; padding:9px 4px 7px; box-shadow: inset 0 -2px 0 rgba(0,0,0,.08); color:var(--muted); }
+  .v4 .pushkeys span.on { background:var(--signal); color:#F7F4EC; box-shadow: inset 0 2px 0 rgba(0,0,0,.18); }
+</style>
+</head>
+<body>
+  <header class="intro">
+    <h1>Rams Industrial, four ways</h1>
+    <p>The same screen each time: a finished search with the top contact. V1 is the version you liked. The others change one or two things: dark mode, a list-and-detail layout, or warmer materials with physical-style controls. Pick one, or mix pieces ("V3 layout with V2's keys").</p>
+  </header>
+
+  <main class="canvas">
+    <!-- V1 -->
+    <section>
+      <header class="cell-label">
+        <h2>V1 · Panel <span style="color:#888">(baseline)</span></h2>
+        <p>The one you picked, now with editable fields drawn as fields. Light grey case, white modules. Orange appears only for live status.</p>
+      </header>
+      <div class="frame v1">
+        <nav><b><i></i>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="page">
+          <div class="query">
+            <div><div class="lbl">Company</div><div class="val">Stripe</div></div>
+            <div><div class="lbl">Role</div><div class="val">Software Engineer</div></div>
+            <div><div class="lbl">Results</div><div class="val" style="font-family:'IBM Plex Mono'">10</div></div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div class="rank">01</div>
+              <div class="name"><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · Peer</small></div>
+              <div class="status"><i></i>Not sent ▾</div>
+            </div>
+            <table>
+              <tr><td class="lbl">Shared</td><td><b style="font-weight:500">School</b> · Carnegie Mellon University</td></tr>
+              <tr><td class="lbl">Unconfirmed</td><td class="warn">Past employer · Squarespace <button>Confirm</button></td></tr>
+            </table>
+            <div class="draft">
+              <div class="dh"><span class="lbl">Connection note</span><span class="meter"><span><i></i></span>86/200</span></div>
+              <div class="field">Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</div>
+              <button class="key">Copy note</button>
+            </div>
+            <div class="draft">
+              <div class="dh"><span class="lbl">After they accept</span></div>
+              <div class="field" style="color:#77756F">Hi Priya, thanks for connecting. I&rsquo;m a backend engineer in New York…</div>
+              <button class="key">Copy message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- V2 -->
+    <section>
+      <header class="cell-label">
+        <h2>V2 · ET66 Dark</h2>
+        <p>After Braun&rsquo;s dark calculator: charcoal body, cream keys with real press depth, and orange reserved for the main action. Status shows as a row of indicator lights instead of a dropdown. Focused and night-friendly.</p>
+      </header>
+      <div class="frame v2">
+        <nav><b><i></i>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="page">
+          <div class="query">
+            <div><div class="lbl">Company</div><div class="val">Stripe</div></div>
+            <div><div class="lbl">Role</div><div class="val">Software Engineer</div></div>
+            <div><div class="lbl">Results</div><div class="val" style="font-family:'IBM Plex Mono'">10</div></div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div class="rank">01</div>
+              <div class="name"><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · Peer</small></div>
+            </div>
+            <div class="spec">
+              <div class="lbl">Shared</div><div>School · Carnegie Mellon University</div>
+              <div class="lbl">Unconfirmed</div><div class="dim">Past employer · Squarespace <button>Confirm</button></div>
+              <div class="lbl">Status</div>
+              <div class="leds"><span class="on"><i></i>Not sent</span><span><i></i>Sent</span><span><i></i>Accepted</span><span><i></i>Replied</span><span><i></i>No reply</span></div>
+            </div>
+            <div class="draft">
+              <div class="dh"><span class="lbl">Connection note</span><span class="count">86 / 200</span></div>
+              <div class="field">Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</div>
+              <div class="keys"><button class="key go">Copy note</button><button class="key alt">Open profile</button><button class="key alt">Mark sent</button></div>
+            </div>
+            <div class="draft">
+              <div class="dh"><span class="lbl">After they accept</span></div>
+              <div class="field" style="color:#9A968C">Hi Priya, thanks for connecting. I&rsquo;m a backend engineer in New York…</div>
+              <div class="keys"><button class="key">Copy message</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- V3 -->
+    <section class="wide">
+      <header class="cell-label">
+        <h2>V3 · Spec Sheet <span style="color:#888">(layout change)</span></h2>
+        <p>All 10 people in a dense ranked list on the left, with each one&rsquo;s shared fact and status at a glance. Click one to open its drafts on the right. Faster to scan and compare. On phones the list sits above the detail.</p>
+      </header>
+      <div class="frame v3">
+        <nav><b><i></i>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="bar"><h1>Software Engineer at Stripe</h1><span class="lbl">10 people · asked for a 30-min chat</span></div>
+        <div class="split">
+          <div class="list">
+            <div class="lh"><span class="lbl">#</span><span class="lbl">Person</span><span class="lbl">Shared</span><span></span></div>
+            <div class="li sel"><span class="n">01</span><span><b>Priya Raman</b><small>Software Engineer</small></span><span class="sh">School</span><span class="dot"></span></div>
+            <div class="li"><span class="n">02</span><span><b>Daniel Okafor</b><small>Software Engineer</small></span><span class="sh">School</span><span class="dot sent"></span></div>
+            <div class="li"><span class="n">03</span><span><b>Mei Chen</b><small>Staff Software Engineer</small></span><span class="sh">School</span><span class="dot rep"></span></div>
+            <div class="li"><span class="n">04</span><span><b>Tomás Alvarez</b><small>Engineering Manager</small></span><span class="sh">City</span><span class="dot"></span></div>
+            <div class="li"><span class="n">05</span><span><b>Hana Sato</b><small>Software Engineer</small></span><span class="sh">City</span><span class="dot"></span></div>
+            <div class="li"><span class="n">06</span><span><b>Arjun Mehta</b><small>Software Engineer</small></span><span class="sh none">Unconfirmed</span><span class="dot"></span></div>
+            <div class="li"><span class="n">07</span><span><b>Sam Whitaker</b><small>Technical Recruiter</small></span><span class="sh none">None</span><span class="dot"></span></div>
+          </div>
+          <div class="detail">
+            <div class="dhead">
+              <span class="lbl" style="padding-top:6px">01</span>
+              <div><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · Peer</small></div>
+              <select><option>Not sent</option></select>
+            </div>
+            <dl>
+              <dt class="lbl">Shared</dt><dd>School · Carnegie Mellon University</dd>
+              <dt class="lbl">Unconfirmed</dt><dd style="color:#7A776F">Past employer · Squarespace <button>Confirm</button></dd>
+            </dl>
+            <div>
+              <div class="dh"><span class="lbl">Connection note</span><span class="lbl">86 / 200</span></div>
+              <div class="field">Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</div>
+              <div class="keys"><button class="key">Copy note</button></div>
+            </div>
+            <div>
+              <div class="dh"><span class="lbl">After they accept</span></div>
+              <div class="field">Hi Priya, thanks for connecting. I&rsquo;m a backend engineer in New York working on billing systems. Since we both went to Carnegie Mellon, I hoped you&rsquo;d be up for a 30-minute chat about your work and team at Stripe.</div>
+              <div class="keys"><button class="key alt">Copy message</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- V4 -->
+    <section>
+      <header class="cell-label">
+        <h2>V4 · SK4 Warm</h2>
+        <p>After Braun&rsquo;s radio-phonograph: warm cream instead of grey, softer corners, olive for the active state. Status is a row of push-keys, the note length is a tuning scale with a needle, and the rank sits in a knob.</p>
+      </header>
+      <div class="frame v4">
+        <nav><b>Reacher</b><span>Search</span><span>Outreach</span><span>Profile</span></nav>
+        <div class="page">
+          <div class="query">
+            <div><div class="lbl">Company</div><div class="val">Stripe</div></div>
+            <div><div class="lbl">Role</div><div class="val">Software Engineer</div></div>
+            <div class="done"><i></i>10 found</div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div class="knob">1</div>
+              <div><a href="#">Priya Raman ↗</a><small>Software Engineer · New York · Peer</small></div>
+            </div>
+            <div class="facts">
+              <div class="fact"><span class="lbl">Shared</span>School · Carnegie Mellon University</div>
+              <div class="fact maybe"><span class="lbl">Unconfirmed</span>Past employer · Squarespace <button>Confirm</button></div>
+            </div>
+            <div>
+              <div class="dh"><span class="lbl">Connection note</span>
+                <div class="scale"><div class="ticks"></div><div class="nums"><span>0</span><span>100</span><span>200</span></div></div>
+              </div>
+              <div class="field">Hi Priya, fellow CMU alum looking at Software Engineer roles at Stripe. Would you be open to connecting?</div>
+              <button class="copy">Copy note</button>
+            </div>
+            <div class="pushkeys"><span class="on">Not sent</span><span>Sent</span><span>Accepted</span><span>Replied</span><span>No reply</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
